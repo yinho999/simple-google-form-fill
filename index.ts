@@ -13,18 +13,14 @@ import puppeteer from "puppeteer";
     if (!form) {
         throw new Error('form not found');
     }
-    //  "ชื่อ - สกุล"
-    const input_1=await form.$('input[type=text]:nth-child(1)');
-    if (!input_1) {
-        throw new Error('input_1 not found');
+    const inputs = await form.$$('input[type=text]');
+    if (!inputs) {
+        throw new Error('inputs not found');
     }
-    await input_1.type('English', { delay: 100 });
-    // "วันที่ต้องการจอง Vacation/Off"
-    const input_2=await form.$('input[type=text]:nth-child(2)');
-    if (!input_2) {
-        throw new Error('input_2 not found');
+    for (let i = 0; i < inputs.length; i++) {
+        const input = inputs[i];
+        await input.type(insert_result[i], { delay: 100 });
     }
-    await input_2.type('2021-10-10', { delay: 100 });
 
     // Submit
     const submit_button = await form.$('div[role=button]');
